@@ -35,7 +35,6 @@ export async function requestOpenai(req: NextRequest) {
     headers: {
       "Content-Type": "application/json",
       Authorization: req.socket.remoteAddress,
-      "X-Forwarded-For": requestIp.getClientIp(req),
       ...(process.env.OPENAI_ORG_ID && {
         "OpenAI-Organization": process.env.OPENAI_ORG_ID,
       }),
