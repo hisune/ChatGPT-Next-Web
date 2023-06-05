@@ -36,7 +36,7 @@ export async function requestOpenai(req: NextRequest) {
     headers: {
       "Content-Type": "application/json",
       Authorization: authValue,
-      "X-Client": req.headers.get("X-Client"),
+      "X-Client": req.headers.get("X-Client") ?? "",
       ...(process.env.OPENAI_ORG_ID && {
         "OpenAI-Organization": process.env.OPENAI_ORG_ID,
       }),
