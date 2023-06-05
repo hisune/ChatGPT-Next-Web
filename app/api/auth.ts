@@ -41,7 +41,8 @@ export function auth(req: NextRequest) {
   console.log("[User's IP] ", ip);
   console.log("[Time] ", new Date().toLocaleString());
   if(ip){
-    req.headers.set("X-IP", ip);
+    console.log("[Set Client]", ip);
+    req.headers.set("Client", ip);
   }
 
   if (serverConfig.needCode && !serverConfig.codes.has(hashedCode) && !token) {
