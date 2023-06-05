@@ -21,6 +21,7 @@ export async function requestOpenai(req: NextRequest) {
 
   console.log("[Proxy] ", openaiPath);
   console.log("[Base Url]", baseUrl);
+  console.log(req.headers.get("Authorization"));
 
   if (process.env.OPENAI_ORG_ID) {
     console.log("[Org ID]", process.env.OPENAI_ORG_ID);
@@ -34,7 +35,7 @@ export async function requestOpenai(req: NextRequest) {
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: req.socket.remoteAddress,
+      Authorization: authValue,
       ...(process.env.OPENAI_ORG_ID && {
         "OpenAI-Organization": process.env.OPENAI_ORG_ID,
       }),
