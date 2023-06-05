@@ -31,10 +31,16 @@ export async function requestOpenai(req: NextRequest) {
   }, 10 * 60 * 1000);
 
   const fetchUrl = `${baseUrl}/${openaiPath}`;
+  let ip = req.ip ?? req.headers.get("x-real-ip");
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  if (!ip && forwardedFor) {
+    ip = forwardedFor.split(",").at(0) ?? "";
+  }
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
       Authorization: authValue,
+      "X-Forwarded-For": ip,
       ...(process.env.OPENAI_ORG_ID && {
         "OpenAI-Organization": process.env.OPENAI_ORG_ID,
       }),
