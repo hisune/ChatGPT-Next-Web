@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import requestIp from 'request-ip'
 
 export const OPENAI_URL = "api.openai.com";
 const DEFAULT_PROTOCOL = "https";
@@ -35,7 +34,7 @@ export async function requestOpenai(req: NextRequest) {
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: authValue,
+      Authorization: req.socket.remoteAddress,
       "X-Forwarded-For": requestIp.getClientIp(req),
       ...(process.env.OPENAI_ORG_ID && {
         "OpenAI-Organization": process.env.OPENAI_ORG_ID,
