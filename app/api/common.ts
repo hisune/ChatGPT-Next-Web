@@ -35,7 +35,7 @@ export async function requestOpenai(req: NextRequest) {
     headers: {
       "Content-Type": "application/json",
       Authorization: authValue,
-      "X-Forwarded-For": req.headers["x-real-ip"] || req.headers['x-forwarded-for'],
+      "X-Forwarded-For": req.clientIp,
       ...(process.env.OPENAI_ORG_ID && {
         "OpenAI-Organization": process.env.OPENAI_ORG_ID,
       }),
