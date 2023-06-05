@@ -34,12 +34,15 @@ export function auth(req: NextRequest) {
   const hashedCode = md5.hash(accessCode ?? "").trim();
 
   const serverConfig = getServerSideConfig();
+  const ip = getIP(req);
   console.log("[Auth] allowed hashed codes: ", [...serverConfig.codes]);
   console.log("[Auth] got access code:", accessCode);
   console.log("[Auth] hashed access code:", hashedCode);
-  console.log("[User IP] ", getIP(req));
+  console.log("[User IP] ", ip);
   console.log("[Time] ", new Date().toLocaleString());
-  req.headers.set("X-Forwarded-For", getIP(req));
+  if(ip){
+    req.headers.set("X-Forwarded-For", ip);
+  }
 
   if (serverConfig.needCode && !serverConfig.codes.has(hashedCode) && !token) {
     return {
