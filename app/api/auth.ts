@@ -38,10 +38,10 @@ export function auth(req: NextRequest) {
   console.log("[Auth] allowed hashed codes: ", [...serverConfig.codes]);
   console.log("[Auth] got access code:", accessCode);
   console.log("[Auth] hashed access code:", hashedCode);
-  console.log("[User IP] ", ip);
+  console.log("[User's IP] ", ip);
   console.log("[Time] ", new Date().toLocaleString());
   if(ip){
-    req.headers.set("X-Forwarded-For", ip);
+    req.headers.set("X-IP", ip);
   }
 
   if (serverConfig.needCode && !serverConfig.codes.has(hashedCode) && !token) {
